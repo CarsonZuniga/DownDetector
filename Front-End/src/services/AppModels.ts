@@ -1,3 +1,5 @@
+import AppService from './AppService.ts'
+
 export type Dataset = {
     label:string,
     data:number[],
@@ -11,4 +13,12 @@ export interface ISiteInfoState {
         datasets:Dataset[]
     },
     hour:number
+}
+
+export interface IGlobalProp {
+    appServiceObj:AppService;
+}
+
+export interface ISiteProp extends IGlobalProp{
+    siteName:string
 }

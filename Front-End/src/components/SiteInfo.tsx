@@ -16,8 +16,8 @@ import {
 } from 'chart.js'
 import { Chart, Line } from 'react-chartjs-2'
 import { faker } from '@faker-js/faker';
-import { ISiteInfoState } from "../services/AppModels";
-import AppService from '../services/AppService'
+import { ISiteProp, ISiteInfoState } from "../services/AppModels.ts";
+import AppService from '../services/AppService.ts'
   
 ChartJS.register(
     CategoryScale,
@@ -44,9 +44,10 @@ const options = {
   },
 };
 
-export default class SiteInfo extends React.Component<{}, ISiteInfoState> {
+export default class SiteInfo extends React.Component<ISiteProp, ISiteInfoState> {
 
     appService:AppService;
+    siteName:string;
 
     constructor(props:any) {
         super(props);
@@ -55,8 +56,10 @@ export default class SiteInfo extends React.Component<{}, ISiteInfoState> {
                 labels: [],
                 datasets: []
             },
-            hour: (new Date).getHours()
+            hour: (new Date()).getHours()
         }
+        this.appService = this.props.appServiceObj;
+        this.siteName = this.props.siteName;
         this.checkUpdate = this.checkUpdate.bind(this);
         this.updateData = this.updateData.bind(this);
     }
@@ -67,7 +70,7 @@ export default class SiteInfo extends React.Component<{}, ISiteInfoState> {
     }
 
     checkUpdate() {
-        const new_hour = (new Date).getHours();
+        const new_hour = (new Date()).getHours();
         if(new_hour !== this.state.hour) {
             this.setState({hour: new_hour});
             this.updateData();
@@ -75,6 +78,9 @@ export default class SiteInfo extends React.Component<{}, ISiteInfoState> {
     }
 
     updateData() {
+        // this.appService.getData(this.siteName).then(result => {
+        //     console.log(result);
+        // });
         let labels = range(this.state.hour-12, this.state.hour);
         const new_data = {
             labels,
@@ -90,10 +96,14 @@ export default class SiteInfo extends React.Component<{}, ISiteInfoState> {
 
     render() {
         return (
-            <>
-            <Line options={options} data={this.state.dataObj} />
-
-            </>
+            <Container fluid>
+                <Row id="site-name">
+                    Currently viewing {this.siteName}
+                </Row>
+                <Row>
+                    <Line options={options} data={this.state.dataObj} />
+                </Row>
+            </Container>
         );
     }
 

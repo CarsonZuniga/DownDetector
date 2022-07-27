@@ -9,10 +9,14 @@ import {
 } from "react-bootstrap/";
 
 import SiteInfo from "./SiteInfo.tsx";
+import AppService from "../services/AppService.ts";
 
 export default class GlobalContext extends React.Component {
+    appService: AppService;
+
     constructor(props:any) {
         super(props);
+        this.appService = new AppService();
         this.getRandomNum = this.getRandomNum.bind(this);
     }
 
@@ -47,7 +51,7 @@ export default class GlobalContext extends React.Component {
         return (
         <Container fluid>
             {getNavBar()}
-            <SiteInfo></SiteInfo>
+            <SiteInfo siteName="google.com" appServiceObj={this.appService}></SiteInfo>
         </Container>
         )
     }
