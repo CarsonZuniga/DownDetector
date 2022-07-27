@@ -1,0 +1,23 @@
+
+body, html {
+    /* margin: 0 !important;
+    padding: 0 !important; */
+}
+
+.container-fluid {  
+    padding: 0 !important;
+}
+
+.col {
+    
+}
+
+.row {
+    margin: 0 !important;
+    
+}
+
+.navbar {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+}
